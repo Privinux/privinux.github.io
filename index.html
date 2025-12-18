@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Privinux — Linux-native IAM & PAM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Privinux is a Linux-native IAM & PAM platform. No Active Directory. No Windows. No legacy bloat." />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #020617;
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      max-width: 720px;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 0 80px rgba(56, 189, 248, 0.15);
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, #38bdf8, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      opacity: 0.85;
+      margin-bottom: 2rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2rem 0;
+    }
+
+    li {
+      margin-bottom: 0.8rem;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+    }
+
+    li::before {
+      content: "◆";
+      color: #38bdf8;
+      margin-right: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .cta {
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      opacity: 0.75;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 1rem;
+      right: 1.5rem;
+      font-size: 0.8rem;
+      opacity: 0.6;
+      z-index: 2;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg"></canvas>
+
+  <div class="content">
+    <div class="card">
+      <h1>Privinux</h1>
+      <div class="tagline">
+        Linux-native Identity & Privileged Access  
+        <br />No Active Directory. No Windows. No Legacy.
+      </div>
+
+      <ul>
+        <li>Built exclusively for Linux-first infrastructure</li>
+        <li>Modern IAM and PAM without Active Directory</li>
+        <li>Secure access for servers, cloud, and Kubernetes</li>
+        <li>Designed for DevOps, SREs, and Security teams</li>
+      </ul>
+
+      <div class="cta">
+        🚧 Currently in development.<br />
+        Early design. Strong opinions. Zero bloat.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    © Privinux — Identity, reimagined for Linux
+  </div>
+
+  <!-- Three.js -->
+  <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: document.getElementById("bg"),
+      antialias: true,
+      alpha: true
+    });
+
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    camera.position.z = 30;
+
+    // Geometry
+    const geometry = new THREE.TorusKnotGeometry(8, 2.5, 120, 16);
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x38bdf8,
+      wireframe: true
+    });
+
+    const torus = new THREE.Mesh(geometry, material);
+    scene.add(torus);
+
+    // Lights
+    const pointLight = new THREE.PointLight(0xa78bfa, 1.5);
+    pointLight.position.set(20, 20, 20);
+    scene.add(pointLight);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    scene.add(ambientLight);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      torus.rotation.x += 0.002;
+      torus.rotation.y += 0.003;
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
